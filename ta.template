@@ -1,0 +1,47 @@
+# attrTemplate for FHEM
+
+#TA-Devices Blindsfunction
+name:Z_01_ta_function_blinds_de
+filter:TYPE=MQTT2_DEVICE
+desc:Represents one blind on one ta device (german)
+par:BASE_PREFIX;Basic prefix like ta_x2/0;{ undef }
+par:DEV_NAME;Device name;{ undef }
+par:FUNCTION_NUM;Number (starting at 1) of the Function;{ undef }
+deletereading DEVICE .*_.*
+attr DEVICE eventMap /trigger_automatic:Auto/top:Oben/bottom:Unten/trigger_horizontal:Waagerecht/
+attr DEVICE devStateIcon 100.*:fts_shutter_100 9\d.*:fts_shutter_90 8\d.*:fts_shutter_80 7\d.*:fts_shutter_70 6\d.*:fts_shutter_60 5\d.*:fts_shutter_50 4\d.*:fts_shutter_40 3\d.*:fts_shutter_30 2\d.*:fts_shutter_20 1\d.*:fts_shutter_10 $
+attr DEVICE webCmd Auto:Oben:Unten:Waagerecht
+attr DEVICE readingList BASE_PREFIX/state/DEV_NAME/functions/FUNCTION_NUM/current/heigh[t]:.* state\
+BASE_PREFIX/state/DEV_NAME/functions/FUNCTION_NUM/current/height:.* height\
+BASE_PREFIX/state/DEV_NAME/functions/FUNCTION_NUM/current/tilt:.* tilt\
+BASE_PREFIX/state/DEV_NAME/functions/FUNCTION_NUM/current/automatic:.* automatic
+attr DEVICE setList\
+position BASE_PREFIX/set/DEV_NAME/functions/FUNCTION_NUM/position\
+top:noArg BASE_PREFIX/set/DEV_NAME/functions/FUNCTION_NUM/position 0:0\
+bottom:noArg BASE_PREFIX/set/DEV_NAME/functions/FUNCTION_NUM/position 100:100\
+trigger_automatic:noArg BASE_PREFIX/set/DEV_NAME/functions/FUNCTION_NUM/auto/tap\
+trigger_horizontal:noArg BASE_PREFIX/set/DEV_NAME/functions/FUNCTION_NUM/horizontal/tap
+
+#TA-Device Analogue Output
+name:Z_01_ta_can_output_analog_de
+filter:TYPE=MQTT2_DEVICE
+desc:Represents one analogue output
+par:BASE_PREFIX;Basic prefix like ta_x2/0;{ undef }
+par:DEV_NAME;Device name;{ undef }
+par:OUTPUT_NUM;Number (starting at 1) of the Output;{ undef }
+deletereading DEVICE .*_.*
+attr DEVICE readingList BASE_PREFIX/state/DEV_NAME/can/output/analog/OUTPUT_NUM/full:.* { json2nameValue($EVENT) }
+attr DEVICE stateFormat value
+
+#TA-Device Digital Output
+name:Z_01_ta_can_output_digital_de
+filter:TYPE=MQTT2_DEVICE
+desc:Represents one digital output
+par:BASE_PREFIX;Basic prefix like ta_x2/0;{ undef }
+par:DEV_NAME;Device name;{ undef }
+par:OUTPUT_NUM;Number (starting at 1) of the Output;{ undef }
+deletereading DEVICE .*_.*
+attr DEVICE readingList BASE_PREFIX/state/DEV_NAME/can/output/digital/OUTPUT_NUM/full:.* { json2nameValue($EVENT) }
+attr DEVICE stateFormat value
+attr DEVICE devStateIcon Aus:FS20.off@black Ein:FS20.on@green
+attr DEVICE eventMap /off:Aus/on:Ein/

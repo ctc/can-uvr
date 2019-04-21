@@ -211,6 +211,9 @@ class MQTTClient:
             self.__client.publish(
                 "%s/state/%s/can/output/digital/%i/value" % (config.mqtt.prefix, device.name.str_value, num),
                 output.str_value, retain=True)
+            self.__client.publish(
+                "%s/state/%s/can/output/digital/%i/int" % (config.mqtt.prefix, device.name.str_value, num),
+                output.value, retain=True)
 
         output = device.canDigitalOutputs[num]
         self.__client.publish(
@@ -258,6 +261,9 @@ class MQTTClient:
             self.__client.publish(
                 "%s/state/%s/can/output/analog/%i/value" % (config.mqtt.prefix, device.name.str_value, num),
                 output.str_value, retain=True)
+            self.__client.publish(
+                "%s/state/%s/can/output/analog/%i/int" % (config.mqtt.prefix, device.name.str_value, num),
+                output.value, retain=True)
 
         output = device.canAnalogOutputs[num]
         self.__client.publish(

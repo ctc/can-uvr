@@ -1,0 +1,61 @@
+Alle Topics mit "state" werden vom Tool verschickt, alle Topics mit "set" werden vom Tool empfangen
+
+PREFIX = Definierte Prefix in config.py
+
+Gerät:
+    NAME = Name vom Gerät
+    PREFIX/state/NAME/nmt - nur "Operational"
+
+    Funktionen:
+        NUM = Nummer der Funktion (beginnend bei 1)
+
+        - PREFIX/state/NAME/functions/NUM/typId - Nummer des Funktionstyp
+        - PREFIX/state/NAME/functions/NUM/typName - Funktionstyp als String, z.B. Jalousiefunktion, Timerfunktion
+
+        Jalousie-Funktionen:
+            - PREFIX/set/all/top - Setzt alle Jalousiefunktionen auf top (= drückt in allen Jalousiefunktionen auf "Vollständig hoch")
+            - PREFIX/set/all/bottom - Setzt alle Jalousiefunktionen auf bottom (Alle vollständig runter)
+
+            - PREFIX/state/NAME/functions/NUM/current/height - Aktuelle Höhe der Jalousie, in %, z.B. 97%
+            - PREFIX/state/NAME/functions/NUM/current/tilt - Aktuelle Neigung der Jalousie, in %, z.B. 95%
+            - PREFIX/state/NAME/functions/NUM/current/automatic - Ob die Jalousie gerade in der Automatik ist oder nicht, z.B. 1/0
+
+            - PREFIX/set/NAME/functions/NUM/position - Setze neue Sollposition der Jalousie, Höhe:Neigung
+                Beispiel: 50:0
+            - PREFIX/set/NAME/functions/NUM/auto/tap - Trigger Autobetrieb, kein Inhalt
+            - PREFIX/set/NAME/functions/NUM/horizontal/tap - Waagerecht setzen (Position = 100:0), kein Inhalt
+
+    CAN-Ausgänge
+        NUM = Nummer des Ausgangs (beginnend bei 1)
+
+        Digital:
+            - PREFIX/state/NAME/can/output/digital/NUM/full - JSON mit name, value und raw keys
+                Beispiel: {"name": "Sicherheitsabschaltung", "value": "Ein", "raw": 1}
+            - PREFIX/state/NAME/can/output/digital/NUM/value - String-Representation des Werts
+                Beispiel: Aus
+            - PREFIX/state/NAME/can/output/digital/NUM/int - Zahlen-Representation des Werts
+                Beispiel: 0
+            - PREFIX/state/NAME/can/output/digital/NUM/name - Konfigurierter Name des Ausgangs
+
+            Nur Virtuell:
+            - PREFIX/set/NAME/can/output/digital/NUM/set - Aktualisiert den zu veröffentlichen Wert + erzwingt Neuversand des Ausgangs
+                Beispiel: Aus
+                Beispiel: Ein
+                Beispiel: 0
+                Beispiel: 1
+            - PREFIX/set/NAME/can/output/digital/NUM/tap - Setzt den Ausgang für zwei Sekunden auf 1, danach auf 0, Kein Inhalt
+        Analog:
+            - PREFIX/state/NAME/can/output/analog/NUM/full - JSON mit name, value und raw keys
+                Beispiel: {"name": "T.Außen", "value": "24.6 °C", "raw": 24.6}
+            - PREFIX/state/NAME/can/output/analog/NUM/value - String-Representation des Werts
+                Beispiel: 24.6 °C
+            - PREFIX/state/NAME/can/output/analog/NUM/int - Zahlen-Representation des Werts
+                Beispiel: 24.6
+            - PREFIX/state/NAME/can/output/analog/NUM/name - Konfigurierter Name des Ausgangs
+
+            Nur Virtuell:
+            - PREFIX/set/NAME/can/output/analog/NUM/set - Aktualisiert den zu veröffentlichen Wert + erzwingt Neuversand des Ausgangs
+                Beispiel: 24.0 °C
+                Beispiel: 24.0
+                Beispiel: 05:00 (bei Uhrzeit)
+                Beispiel: 1234

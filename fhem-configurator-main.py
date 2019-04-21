@@ -1,4 +1,7 @@
 #!/usr/bin/python3.4
+
+# Requires the ta.template file to be present in the /FHEM/lib/AttrTemplate folder
+
 import argparse
 
 parser = argparse.ArgumentParser(description='Adding defined functions/outputs to fhem')
