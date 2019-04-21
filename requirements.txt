@@ -3,5 +3,4 @@ crccheck==0.6
 fhem==0.6.1
 paho-mqtt==1.4.0
 PyDispatcher==2.0.5
-requests==2.4.3
 typing==3.6.6
